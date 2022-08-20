@@ -766,6 +766,7 @@ bool32 RSDK::LoadMod(ModInfo *info, std::string modsPath, std::string folder, bo
                             secset.insert(pair<string, string>(keys[j] + strlen(secn) + 1, iniparser_getstring(ini, keys[j], "")));
                         info->settings.insert(pair<string, map<string, string>>(secn, secset));
                     }
+                    info->modLogicHandles.push_back(linkHandle);
                 }
                 else {
                     // either you use categories or you don't, i don't make the rules

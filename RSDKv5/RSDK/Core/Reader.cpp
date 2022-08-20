@@ -277,7 +277,10 @@ bool32 RSDK::LoadFile(FileInfo *info, const char *filename, uint8 fileMode)
 #endif
 
 #if RETRO_PLATFORM == RETRO_OSX || RETRO_PLATFORM == RETRO_ANDROID
-    if (addPath) {
+#if RETRO_USE_MOD_LOADER
+    if (addPath)
+#endif
+    {
         char pathBuf[0x100];
         sprintf_s(pathBuf, sizeof(pathBuf), "%s%s", SKU::userFileDir, fullFilePath);
         sprintf_s(fullFilePath, sizeof(fullFilePath), "%s", pathBuf);

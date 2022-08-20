@@ -236,7 +236,7 @@ enum GameRegions {
 
 // enables the use of the mod loader
 #ifndef RETRO_USE_MOD_LOADER
-#define RETRO_USE_MOD_LOADER (!RETRO_USE_ORIGINAL_CODE && 1)
+#define RETRO_USE_MOD_LOADER (!RETRO_USE_ORIGINAL_CODE && 0)
 #endif
 
 // defines the version of the mod loader, this should be changed ONLY if the ModFunctionTable is updated in any way
@@ -521,6 +521,17 @@ enum GameRegions {
 // ENGINE INCLUDES
 // ============================
 
+#if !RETRO_USE_MOD_LOADER
+#include <vector>
+#include <string>
+#include <map>
+#include <functional>
+
+#include <filesystem>
+#include <sstream>
+#include <stdexcept>
+#include <functional>
+#endif
 #include "RSDK/Storage/Storage.hpp"
 #include "RSDK/Core/Math.hpp"
 #include "RSDK/Storage/Text.hpp"
