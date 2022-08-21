@@ -190,9 +190,6 @@ void RSDK::SKU::SaveUserData()
 #endif
 }
 
-// Found this in Switch 1.00, doesn't seem to show up in rev02 variants but its neat nonetheless
-bool32 RSDK::SKU::GetXYButtonFlip() { return engine.XYFlip; }
-
 #if RETRO_REV02
 void RSDK::SKU::UserCore::StageLoad()
 {
@@ -219,6 +216,8 @@ void RSDK::SKU::UserCore::OnUnknownEvent()
     userStorage->OnUnknownEvent();
 }
 #else
+// Found this in Switch 1.00, doesn't seem to show up in rev02 variants but its neat nonetheless
+bool32 RSDK::SKU::GetXYButtonFlip() { return engine.XYFlip; }
 bool32 RSDK::SKU::GetConfirmButtonFlip() { return engine.confirmFlip; }
 void RSDK::SKU::LaunchManual()
 {

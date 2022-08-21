@@ -153,14 +153,13 @@ inline bool32 IsOverlayEnabled(uint32 deviceID) { return userCore->IsOverlayEnab
 inline bool32 CheckDLC(uint8 id) { return userCore->CheckDLC(id); }
 inline bool32 ShowExtensionOverlay(int32 overlay) { return userCore->ShowExtensionOverlay(overlay); }
 #else
+bool32 GetXYButtonFlip();
 bool32 GetConfirmButtonFlip();
 void LaunchManual();
 void ExitGame();
 int32 GetDefaultGamepadType();
 bool32 ShowExtensionOverlay(uint8 overlay);
 #endif
-
-bool32 GetXYButtonFlip();
 
 #if RETRO_VER_EGS
 inline bool32 SetupExtensionOverlay() { return userCore->SetupExtensionOverlay(); }

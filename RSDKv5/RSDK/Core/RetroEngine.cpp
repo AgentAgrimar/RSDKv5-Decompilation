@@ -70,13 +70,11 @@ int32 RSDK::RunRetroEngine(int32 argc, char *argv[])
         // its used in cases like steam where it gives the "Steam must be running to play this game" message and closes
 #if RETRO_REV02
         if (!SKU::userCore->CheckAPIInitialized()) {
-#else
-        if (false) { // it's more hardcoded in rev01, so lets pretend it's here
-#endif
             // popup a message box saying the API failed to validate or something
             // on steam this is the "steam must be running to play this game" message
             return 0;
         }
+#endif
 
         InitEngine();
 #if RETRO_USE_MOD_LOADER
@@ -292,15 +290,21 @@ int32 RSDK::RunRetroEngine(int32 argc, char *argv[])
                 }
 #endif
                 if (engine.inFocus == 1) {
-                    // Uncomment this code to add the build number to dev menu
+#if RETRO_PLATFORM == RETRO_SWITCH
+                    // Adds the build number to dev menu
                     // overrides the game subtitle, used in switch dev menu
                     if (currentScreen && sceneInfo.state == ENGINESTATE_DEVMENU) {
                         // Switch 1.00 build # is 17051, 1.04 is 18403
-                        // char buffer[0x40];
-                        // sprintf(buffer, "Build #%d", 18403);
-                        // DrawRectangle(currentScreen->center.x - 128, currentScreen->center.y - 48, 256, 8, 0x008000, 0xFF, INK_NONE, true);
-                        // DrawDevString(buffer, currentScreen->center.x, currentScreen->center.y - 48, 1, 0xF0F0F0);
+                        char buffer[0x40];
+#if RETRO_REV02
+                        sprintf(buffer, "Build #%d", 18403);
+#else
+                        sprintf(buffer, "Build #%d", 17051);
+#endif
+                        DrawRectangle(currentScreen->center.x - 128, currentScreen->center.y - 48, 256, 8, 0x008000, 0xFF, INK_NONE, true);
+                        DrawDevString(buffer, currentScreen->center.x, currentScreen->center.y - 48, 1, 0xF0F0F0);
                     }
+#endif
 
                     RenderDevice::CopyFrameBuffer();
                 }
@@ -1226,7 +1230,7 @@ void RSDK::InitGameLink()
 #if RETRO_PLATFORM == RETRO_WIN
             strcpy_s(buffer, 0x100, gameLogicName);
 #else
-        sprintf(buffer, "%s%s", SKU::userFileDir, gameLogicName);
+            sprintf(buffer, "%s%s", SKU::userFileDir, gameLogicName);
 #endif
             if (!gameLogicHandle)
                 gameLogicHandle = Link::Open(buffer);
@@ -1247,7 +1251,7 @@ void RSDK::InitGameLink()
 #if RETRO_REV02
                     linkGameLogic(&info);
 #else
-                linkGameLogic(info);
+                    linkGameLogic(info);
 #endif
                     linked = true;
                 }
@@ -1266,7 +1270,7 @@ void RSDK::InitGameLink()
 #if RETRO_REV02
             linkGameLogic(&info);
 #else
-        linkGameLogic(info);
+            linkGameLogic(info);
 #endif
         }
 #if RETRO_USE_MOD_LOADER
