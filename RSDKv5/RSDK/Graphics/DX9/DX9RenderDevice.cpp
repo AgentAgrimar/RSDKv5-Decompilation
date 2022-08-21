@@ -949,6 +949,22 @@ bool RenderDevice::InitShaders()
 
 bool RenderDevice::SetupRendering()
 {
+#if !RETRO_USE_ORIGINAL_CODE
+    if (HMODULE hMod = ::LoadLibraryA("d3d9.dll")) {
+        typedef HRESULT(WINAPI * CreateD3D9ExFunc_t)(UINT, IUnknown **);
+        if (CreateD3D9ExFunc_t pfnCreateD3D9Ex = (CreateD3D9ExFunc_t)::GetProcAddress(hMod, "Direct3DCreate9Ex")) {
+            IUnknown *pD3D9Ex = NULL;
+            if ((*pfnCreateD3D9Ex)(D3D_SDK_VERSION, &pD3D9Ex) == S_OK && pD3D9Ex) {
+                dx9Context = static_cast<IDirect3D9 *>(pD3D9Ex);
+            }
+        }
+        ::FreeLibrary(hMod);
+    }
+
+    PrintLog(PRINT_NORMAL, "D3D9Ex Active: %s", dx9Context != NULL ? "Y" : "N");
+
+    if (dx9Context == NULL)
+#endif
     dx9Context = Direct3DCreate9(D3D_SDK_VERSION);
     if (!dx9Context)
         return false;
