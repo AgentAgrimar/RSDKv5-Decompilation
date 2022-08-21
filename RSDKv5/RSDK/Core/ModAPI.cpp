@@ -523,7 +523,7 @@ void RSDK::LoadMods(bool newOnly, bool32 getVersion)
                 bool32 active = iniparser_getboolean(ini, keys[m], false);
                 bool32 loaded = LoadMod(&info, modPath.string(), string(keys[m] + 5), active, getVersion);
                 if (!loaded) {
-                    PrintLog(PRINT_NORMAL, "[MOD] Failed to load mod %s.", info.id.c_str(), active ? "Y" : "N");
+                    PrintLog(PRINT_NORMAL, "[MOD] Failed to load mod %s.", info.id.c_str());
                     info.active = false;
                 }
                 else
