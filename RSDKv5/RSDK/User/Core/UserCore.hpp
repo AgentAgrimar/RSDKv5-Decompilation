@@ -79,7 +79,8 @@ struct UserCore {
     virtual bool32 IsOverlayEnabled(uint32 deviceID) { return false; }
     virtual bool32 CheckDLC(uint8 id)
     {
-        if (id < 8)
+        static constexpr uint32 length = sizeof(values) / sizeof(values[0]);
+        if (id < length)
             return values[id];
         else
             return 0;
