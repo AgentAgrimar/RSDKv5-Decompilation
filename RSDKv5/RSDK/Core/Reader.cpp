@@ -285,8 +285,6 @@ bool32 RSDK::LoadFile(FileInfo *info, const char *filename, uint8 fileMode)
         sprintf_s(pathBuf, sizeof(pathBuf), "%s%s", SKU::userFileDir, fullFilePath);
         sprintf_s(fullFilePath, sizeof(fullFilePath), "%s", pathBuf);
     }
-#else
-    (void)addPath; // unused
 #endif
 
     if (!info->externalFile && fileMode == FMODE_RB && useDataPack) {

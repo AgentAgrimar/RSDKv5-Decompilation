@@ -268,8 +268,11 @@ void RSDK::AppendText(String *string, const char *appendString)
 #if RETRO_USE_ORIGINAL_CODE
     const char *textBuf = appendString;
     for (int32 pos = 0; *textBuf; ++len) pos += utf8CharSizes[*textBuf++ & 0xFF];
-#else
+#elif RETRO_REV0U
     len = StrLength(appendString);
+#else
+    for (len = 0; appendString[len]; len++)
+        ;
 #endif
 
     if (!len)
